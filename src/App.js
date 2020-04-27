@@ -1,26 +1,80 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useRef, useEffect} from 'react';
 import './App.css';
+import Block from './components/Block'
+import {connect} from 'react-redux'
 
-function App() {
+
+const  App = (props) => {
+  let [width, setWidth] = useState(0)
+  let [refs, setRefs] = useState([])
+  let [win, setWin] = useState(false)
+
+  const getWidth = (e) => {
+    setWidth(e.target.value * e.target.value);
+    console.log(width)
+  }
+
+  let currRef = useRef(props.refs);
+
+  useEffect(() => {
+    setRefs(currRef)
+  }, [currRef])
+
+
+
+  let result = []
+  const getOpacity = (e) => {
+    e.target.style.opacity = 1;
+    result.push({
+      item: e.target.dataset.item,
+      color: e.target.style.backgroundColor
+    })
+    if (result.length === 2) {
+      if (result[0].color !== result[1].color) {
+        setTimeout(() => {
+          refs.current[result[0].item].style.opacity = 0;
+          refs.current[result[1].item].style.opacity = 0;
+          result.length = 0;
+        }, 200)
+      } else {
+        result.length = 0;
+      }
+    }
+    let arr = refs.current.filter(item => item.style.opacity == 0)
+    if (arr.length === 0) {
+      setWin(true)
+    }
+  }
+
+  const getWin = () => {
+    window.location.reload()
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      { win 
+      ? <div className='win'>
+          <h3>Победа!</h3>
+          <button onClick={getWin}>Заново</button>
+        </div>
+      : <>
+          <h3>Game</h3>
+          <Block reff={props.refs} getOpacity={getOpacity} />
+        </>}
+      </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    refs: state.refs
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addRef: ref => dispatch(ref)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
