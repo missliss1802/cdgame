@@ -5,14 +5,8 @@ import {connect} from 'react-redux'
 
 
 const  App = (props) => {
-  let [width, setWidth] = useState(0)
   let [refs, setRefs] = useState([])
   let [win, setWin] = useState(false)
-
-  const getWidth = (e) => {
-    setWidth(e.target.value * e.target.value);
-    console.log(width)
-  }
 
   let currRef = useRef(props.refs);
 
