@@ -1,3 +1,5 @@
+ghpages: https://missliss1802.github.io/cdgame/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
