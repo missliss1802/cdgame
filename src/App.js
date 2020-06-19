@@ -14,7 +14,6 @@ const  App = (props) => {
       <div className="App">
         <Game/>
       </div>
-      <h1>Anastasia Lunina I love you</h1>
     </Context.Provider>
   );
 }
