@@ -14,12 +14,7 @@ const  App = (props) => {
       <div className="App">
         <Game/>
       </div>
-<<<<<<< HEAD
-      <h1>Nasty</h1>
-      <h1>lalala</h1>
-=======
       <h1>Anastasia Lunina</h1>
->>>>>>> test
     </Context.Provider>
   );
 }
